@@ -10,7 +10,7 @@ import com.example.searchimg.model.Animal
 import com.squareup.picasso.Picasso
 
 
-class AnimalAdapter(private val animals: List<Animal>) :
+class AnimalAdapter(private var animals: List<Animal>) :
     RecyclerView.Adapter<AnimalAdapter.ViewHolder>() {
     inner class ViewHolder(private val binding: ItemRvBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -34,5 +34,9 @@ class AnimalAdapter(private val animals: List<Animal>) :
 
     override fun getItemCount(): Int = animals.size
 
+    fun filterList(filteredList: List<Animal>) {
+        animals = filteredList
+        notifyDataSetChanged()
+    }
 
 }

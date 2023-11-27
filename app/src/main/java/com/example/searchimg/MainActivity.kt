@@ -2,6 +2,9 @@ package com.example.searchimg
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.searchimg.adapter.AnimalAdapter
@@ -40,5 +43,24 @@ class MainActivity : AppCompatActivity() {
         recyclerView = binding.rvImages
         recyclerView.layoutManager = GridLayoutManager(this,2)
         recyclerView.adapter = animalAdapter
+
+        binding.edSearch.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //Not used in this example
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterItems(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                //Not used in this example
+            }
+        })
+    }
+    private fun filterItems(query: String){
+        val filteredList = allAnimals.filter { it.name.contains(query, ignoreCase = true) }
+        animalAdapter.filterList(filteredList)
+
     }
 }
